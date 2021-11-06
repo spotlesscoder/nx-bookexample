@@ -1,5 +1,5 @@
 import { Author } from '@prisma/client';
-import { AuthorDto } from './authors-dto';
+import { AuthorDto, CreateAuthorDto } from './authors-dto';
 
 export class AuthorsMapper {
   public static toDto(author: Author): AuthorDto {
@@ -16,6 +16,17 @@ export class AuthorsMapper {
   public static toEntity(authorDto: AuthorDto): Author {
     const result: Author = {
       id: authorDto.id,
+      firstName: authorDto.firstName,
+      lastName: authorDto.lastName,
+      birthTimestamp: authorDto.birthTimestamp,
+    };
+
+    return result;
+  }
+
+  public static createDtoToEntity(authorDto: CreateAuthorDto): Author {
+    const result: Author = {
+      id: null,
       firstName: authorDto.firstName,
       lastName: authorDto.lastName,
       birthTimestamp: authorDto.birthTimestamp,

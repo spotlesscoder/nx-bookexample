@@ -4,3 +4,9 @@ export type AuthorDto = {
   lastName: string;
   birthTimestamp: Date | null;
 };
+
+export type CreateAuthorDto = {
+  firstName: string;
+  lastName: string;
+  birthTimestamp: Date | null;
+};
