@@ -1,6 +1,29 @@
 {
   "version": 2,
   "projects": {
+    "authors": {
+      "root": "libs/authors",
+      "sourceRoot": "libs/authors/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/authors/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/authors"],
+          "options": {
+            "jestConfig": "libs/authors/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "bookinfo-api": {
       "root": "apps/bookinfo-api",
       "sourceRoot": "apps/bookinfo-api/src",
