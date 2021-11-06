@@ -1,0 +1,130 @@
+{
+  "version": 2,
+  "projects": {
+    "bookstore": {
+      "root": "apps/bookstore",
+      "sourceRoot": "apps/bookstore/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/bookstore",
+            "index": "apps/bookstore/src/index.html",
+            "baseHref": "/",
+            "main": "apps/bookstore/src/main.tsx",
+            "polyfills": "apps/bookstore/src/polyfills.ts",
+            "tsConfig": "apps/bookstore/tsconfig.app.json",
+            "assets": [
+              "apps/bookstore/src/favicon.ico",
+              "apps/bookstore/src/assets"
+            ],
+            "styles": ["apps/bookstore/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/bookstore/src/environments/environment.ts",
+                  "with": "apps/bookstore/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "bookstore:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "bookstore:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/bookstore/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/bookstore"],
+          "options": {
+            "jestConfig": "apps/bookstore/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bookstore-e2e": {
+      "root": "apps/bookstore-e2e",
+      "sourceRoot": "apps/bookstore-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/bookstore-e2e/cypress.json",
+            "devServerTarget": "bookstore:serve",
+            "tsConfig": "apps/bookstore-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bookstore:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/bookstore-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "bookstore"
+}
