@@ -11,22 +11,33 @@ datasource db {
 }
 
 model Author {
-  id             String    @id @default(cuid())
+  id             String           @id @default(cuid())
   firstName      String
   lastName       String
   birthTimestamp DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
-  booksWritten   Book[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime?        @updatedAt
+  booksWritten   BooksOfAuthors[]
 }
 
 model Book {
-  id                  String    @id @default(cuid())
-  title               String    @unique
+  id                  String           @id @default(cuid())
+  title               String           @unique
   price               Decimal?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime? @updatedAt
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime?        @updatedAt
   writeStartTimestamp DateTime
   publishTimestamp    DateTime?
-  authors             Author[]
+  authors             BooksOfAuthors[]
+}
+
+model BooksOfAuthors {
+  author     Author   @relation(fields: [authorId], references: [id])
+  authorId   String // relation scalar field (used in the `@relation` attribute above)
+  book       Book     @relation(fields: [bookId], references: [id])
+  bookId     String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([authorId, bookId])
 }

@@ -1,20 +1,21 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
 import { Injectable } from '@nestjs/common';
-import { Book, Prisma } from '@prisma/client';
+import { Author, Book, Prisma } from '@prisma/client';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 
 @Injectable()
 export class AppService {
   constructor(
     private authorsService: AuthorsService,
-    private booksService: BooksService
+    private booksService: BooksService,
+    private booksOfAuthorsService: BooksOfAuthorsService
   ) {}
 
   async handleCreateAutoBiographyCommand(
     createAutobiographyProcessDto: CreateAutobiographyProcessDto
   ) {
-    this.authorsService.createAuthor({
+    const author: Author = this.authorsService.createAuthor({
       firstName: createAutobiographyProcessDto.authorFirstName,
       lastName: createAutobiographyProcessDto.authorLastName,
       birthTimestamp: createAutobiographyProcessDto.authorBirthTimestamp,
@@ -36,6 +37,8 @@ export class AppService {
     });
 
     this.booksService.publishBookWithId(book.id);
+
+    const booksOfAuthorService;
   }
 
   getData(): { message: string } {

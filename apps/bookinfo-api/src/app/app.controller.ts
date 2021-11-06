@@ -11,7 +11,7 @@ export class AppController {
     return this.appService.getData();
   }
 
-  @Post()
+  @Post('autobiography')
   letAuthorBeBornWriteAndPublishBook(
     @Body() createAutobiographyProcessDto: CreateAutobiographyProcessDto
   ) {
