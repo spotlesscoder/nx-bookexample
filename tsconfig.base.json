@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@bookexample/authors": ["libs/authors/src/index.ts"]
+      "@bookexample/authors": ["libs/authors/src/index.ts"],
+      "@bookexample/books": ["libs/books/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

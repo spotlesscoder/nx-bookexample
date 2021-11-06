@@ -76,6 +76,29 @@
       },
       "tags": []
     },
+    "books": {
+      "root": "libs/books",
+      "sourceRoot": "libs/books/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/books/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/books"],
+          "options": {
+            "jestConfig": "libs/books/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "bookstore": {
       "root": "apps/bookstore",
       "sourceRoot": "apps/bookstore/src",
