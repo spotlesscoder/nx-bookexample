@@ -1,6 +1,58 @@
 {
   "version": 2,
   "projects": {
+    "bookinfo-api": {
+      "root": "apps/bookinfo-api",
+      "sourceRoot": "apps/bookinfo-api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/bookinfo-api",
+            "main": "apps/bookinfo-api/src/main.ts",
+            "tsConfig": "apps/bookinfo-api/tsconfig.app.json",
+            "assets": ["apps/bookinfo-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/bookinfo-api/src/environments/environment.ts",
+                  "with": "apps/bookinfo-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "bookinfo-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/bookinfo-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/bookinfo-api"],
+          "options": {
+            "jestConfig": "apps/bookinfo-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "bookstore": {
       "root": "apps/bookstore",
       "sourceRoot": "apps/bookstore/src",
@@ -106,25 +158,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "bookstore"
+  }
 }
