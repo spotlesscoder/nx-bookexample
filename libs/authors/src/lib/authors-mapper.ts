@@ -16,6 +16,8 @@ export class AuthorsMapper {
   public static toEntity(authorDto: AuthorDto): Author {
     const result: Author = {
       id: authorDto.id,
+      createdAt: new Date(),
+      updatedAt: null,
       firstName: authorDto.firstName,
       lastName: authorDto.lastName,
       birthTimestamp: authorDto.birthTimestamp,
@@ -27,6 +29,8 @@ export class AuthorsMapper {
   public static createDtoToEntity(authorDto: CreateAuthorDto): Author {
     const result: Author = {
       id: null,
+      createdAt: new Date(),
+      updatedAt: null,
       firstName: authorDto.firstName,
       lastName: authorDto.lastName,
       birthTimestamp: authorDto.birthTimestamp,

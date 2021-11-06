@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { Author } from '@prisma/client';
 import { AuthorDto, CreateAuthorDto } from './authors-dto';
 import { AuthorsMapper } from './authors-mapper';
@@ -38,12 +38,12 @@ export class AuthorsController {
     return result;
   }
 
-  @Post()
+  @Put()
   public async update(@Body() authorDto: AuthorDto) {
     let result: AuthorDto = null;
 
     if (authorDto) {
-      let author: Author = AuthorsMapper.toDto(authorDto);
+      let author: Author = AuthorsMapper.toEntity(authorDto);
       author = await this.authorsService.updateAuthor(author);
 
       if (author) {
