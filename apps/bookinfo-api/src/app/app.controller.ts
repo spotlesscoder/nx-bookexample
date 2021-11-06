@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 
 @Controller()
 export class AppController {
@@ -9,5 +9,14 @@ export class AppController {
   @Get()
   getData() {
     return this.appService.getData();
+  }
+
+  @Post()
+  letAuthorBeBornWriteAndPublishBook(
+    @Body() createAutobiographyProcessDto: CreateAutobiographyProcessDto
+  ) {
+    this.appService.handleCreateAutoBiographyCommand(
+      createAutobiographyProcessDto
+    );
   }
 }
