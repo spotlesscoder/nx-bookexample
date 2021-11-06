@@ -1,6 +1,6 @@
 import { Book, Prisma } from '@prisma/client';
-import { BookDto } from './books-dto';
-import { BooksMapper, CreateBookDto } from './books-mapper';
+import { BookDto, CreateBookDto } from './books-dto';
+import { BooksMapper } from './books-mapper';
 
 describe('BooksMapper', () => {
   it('maps to dto successfully', () => {
@@ -47,6 +47,7 @@ describe('BooksMapper', () => {
     const dto: CreateBookDto = {
       title: 'Book Title',
       price: 12,
+      publishTimestamp: null,
       writeStartTimestamp: date,
     };
 

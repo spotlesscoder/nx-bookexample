@@ -9,6 +9,8 @@ describe('AuthorsMapper', () => {
       id: '123',
       firstName: 'John',
       lastName: 'Doe',
+      createdAt: date,
+      updatedAt: null,
       birthTimestamp: date,
     };
 
