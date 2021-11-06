@@ -28,7 +28,23 @@ export class AuthorsController {
 
     if (authorDto) {
       let author: Author = AuthorsMapper.createDtoToEntity(authorDto);
-      author = await this.authorsService.saveAuthor(author);
+      author = await this.authorsService.createAuthor(author);
+
+      if (author) {
+        result = AuthorsMapper.toDto(author);
+      }
+    }
+
+    return result;
+  }
+
+  @Post()
+  public async update(@Body() authorDto: AuthorDto) {
+    let result: AuthorDto = null;
+
+    if (authorDto) {
+      let author: Author = AuthorsMapper.toDto(authorDto);
+      author = await this.authorsService.updateAuthor(author);
 
       if (author) {
         result = AuthorsMapper.toDto(author);

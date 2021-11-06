@@ -11,18 +11,22 @@ datasource db {
 }
 
 model Author {
-  id String @id @default(cuid())
-  firstName String
-  lastName String
+  id             String    @id @default(cuid())
+  firstName      String
+  lastName       String
   birthTimestamp DateTime?
-  booksWritten Book[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  booksWritten   Book[]
 }
 
 model Book {
-  id String @id @default(cuid())
-  title String @unique
-  price Decimal?
+  id                  String    @id @default(cuid())
+  title               String    @unique
+  price               Decimal?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime? @updatedAt
   writeStartTimestamp DateTime
-  publishTimestamp DateTime?
-  authors Author[]
+  publishTimestamp    DateTime?
+  authors             Author[]
 }
