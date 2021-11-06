@@ -27,15 +27,6 @@
       }
     ]
   },
-  "projects": {
-    "bookstore": {
-      "tags": []
-    },
-    "bookstore-e2e": {
-      "tags": [],
-      "implicitDependencies": ["bookstore"]
-    }
-  },
   "cli": {
     "defaultCollection": "@nrwl/react"
   },

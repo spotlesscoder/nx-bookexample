@@ -129,7 +129,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "bookstore-e2e": {
       "root": "apps/bookstore-e2e",
@@ -156,7 +157,9 @@
             "lintFilePatterns": ["apps/bookstore-e2e/**/*.{js,ts}"]
           }
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["bookstore"]
     }
   }
 }
