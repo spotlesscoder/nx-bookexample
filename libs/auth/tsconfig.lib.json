@@ -8,5 +8,5 @@
     "target": "es6"
   },
   "exclude": ["**/*.spec.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../../apps/bookinfo-api/src/app/auth/local-auth.guard.ts", "../../apps/bookinfo-api/src/app/auth/local.strategy.ts"]
 }

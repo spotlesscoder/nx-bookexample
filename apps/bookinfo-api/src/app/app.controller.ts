@@ -7,10 +7,9 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { LocalAuthGuard } from '../../../../../auth/local-auth.guard';
 import { AppService } from './app.service';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
-
 @Controller()
 export class AppController {
   constructor(
