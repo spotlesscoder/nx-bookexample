@@ -1,4 +1,3 @@
-import { AuthService } from '@bookexample/auth';
 import {
   Body,
   Controller,
@@ -8,6 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 @Controller()
