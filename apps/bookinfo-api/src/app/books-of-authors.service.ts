@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class BooksOfAuthorsService {
-  assignBooksToAuthors(authors: Author[], books: Book[]): BooksOfAuthor[] {
+  assignBooksToAuthors(authors: Author[], books: Book[]): BooksOfAuthors[] {
     const assignments: BooksOfAuthors[] = [];
     authors.forEach((author) => {
       books.forEach(async (book) => {
