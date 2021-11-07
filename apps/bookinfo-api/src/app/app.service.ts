@@ -1,5 +1,6 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
+import { User } from '@bookexample/users';
 import { Injectable } from '@nestjs/common';
 import { Author, Book, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
@@ -14,7 +15,8 @@ export class AppService {
   ) {}
 
   async handleCreateAutoBiographyCommand(
-    createAutobiographyProcessDto: CreateAutobiographyProcessDto
+    createAutobiographyProcessDto: CreateAutobiographyProcessDto,
+    user: User
   ) {
     const author: Author = await this.authorsService.createAuthor({
       firstName: createAutobiographyProcessDto.authorFirstName,
