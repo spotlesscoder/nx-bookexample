@@ -1338,6 +1338,11 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@js-joda/core@^4.3.1":
+  "integrity" "sha512-oeaetlodcqVsiZDxnEcqsbs+sXBkASxua0mXs5OXuPQXz3/wdPTMlxwfQ4z2HKcOik3S9voW3QJkp/KLWDhvRQ=="
+  "resolved" "https://registry.npmjs.org/@js-joda/core/-/core-4.3.1.tgz"
+  "version" "4.3.1"
+
 "@nestjs/common@^6.0.0 || ^7.0.0 || ^8.0.0", "@nestjs/common@^7.0.0":
   "integrity" "sha512-BUJQHNhWzwWOkS4Ryndzd4HTeRObcAWV2Fh+ermyo3q3xYQQzNoEWclJVL/wZec8AONELwIJ+PSpWI53VP0leg=="
   "resolved" "https://registry.npmjs.org/@nestjs/common/-/common-7.6.18.tgz"

@@ -1,6 +1,7 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
 import { User } from '@bookexample/users';
+import { IllegalArgumentException, LocalDate, Period } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { Author, Book, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
@@ -18,6 +19,14 @@ export class AppService {
     createAutobiographyProcessDto: CreateAutobiographyProcessDto,
     user: User
   ) {
+    const birthDate : LocalDate = LocalDate.parse(createAutobiographyProcessDto.authorBirthTimestamp.toISOString());
+    const writeStartTimestamp : LocalDate = LocalDate.parse(createAutobiographyProcessDto.writeStartTimestamp.toISOString());
+
+    const period: Period = Period.between(birthDate, writeStartTimestamp);
+    if (period.years() < 30) {
+      throw new IllegalArgumentException("Write start timestamp must be at least 30 years apart from birth timestamp");
+    }
+
     const author: Author = await this.authorsService.createAuthor({
       firstName: createAutobiographyProcessDto.authorFirstName,
       lastName: createAutobiographyProcessDto.authorLastName,
