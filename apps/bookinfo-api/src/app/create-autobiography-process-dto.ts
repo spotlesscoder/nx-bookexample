@@ -1,8 +1,7 @@
-
 import { Type } from 'class-transformer';
 import { IsDate } from 'class-validator';
 
-export type CreateAutobiographyProcessDto = {
+export class CreateAutobiographyProcessDto {
   authorFirstName: string;
   authorLastName: string;
   @Type(() => Date)
@@ -12,8 +11,8 @@ export type CreateAutobiographyProcessDto = {
   @IsDate()
   writeStartTimestamp: Date;
   @Type(() => Date)
-  @^IsDate()
+  @IsDate()
   publishTimestamp: Date | null;
   bookTitle: string;
   bookPrice: number;
-};
+}
