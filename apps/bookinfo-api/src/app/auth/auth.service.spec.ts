@@ -1,28 +1,31 @@
-import { UsersModule, UsersService } from '@bookexample/users';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
+import { User, UsersService } from '@bookexample/users';
+import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { jwtConstants } from './constants';
-import { JwtStrategy } from './jwt.strategy';
-import { LocalAuthGuard } from './local-auth.guard';
-import { LocalStrategy } from './local.strategy';
 
 describe('AuthService', () => {
   let service: AuthService;
+  const usersServiceMock = {
+    async findOne(email: string): Promise<User | undefined> {
+      return {
+        id: 1,
+        email: 'john',
+        password: 'changeme',
+      };
+    },
+  };
+
+  const jwtServiceMock = {};
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      imports: [
-        UsersModule,
-        PassportModule,
-        JwtModule.register({
-          secret: jwtConstants.secret,
-          signOptions: { expiresIn: '3600s' },
-        }),
-      ],
-      providers: [AuthService, UsersService, JwtService, JwtStrategy, LocalStrategy, LocalAuthGuard],
-    }).compile();
+      providers: [AuthService, UsersService, JwtService],
+    })
+      .overrideProvider(UsersService)
+      .useValue(usersServiceMock)
+      .overrideProvider(JwtService)
+      .useValue(jwtServiceMock)
+      .compile();
 
     service = module.get(AuthService);
   });
