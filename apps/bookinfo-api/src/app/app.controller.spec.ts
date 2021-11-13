@@ -58,7 +58,7 @@ describe('AppController', () => {
       .expect('Content-Type', /json/);
     //.expect(200);
 
-    expect(res.body);
+    //console.log(util.inspect(res, { showHidden: false, depth: null }));
   });
 
   describe('getData', () => {
