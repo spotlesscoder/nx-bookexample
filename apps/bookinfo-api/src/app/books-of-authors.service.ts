@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class BooksOfAuthorsService {
-  assignBooksToAuthors(authors: Author[], books: Book[]): BooksOfAuthors[] {
+  public async deleteAll() {
+    await prisma.booksOfAuthors.deleteMany({});
+  }
+
+  public assignBooksToAuthors(authors: Author[], books: Book[]): BooksOfAuthors[] {
     const assignments: BooksOfAuthors[] = [];
     authors.forEach((author) => {
       books.forEach(async (book) => {
@@ -16,9 +20,7 @@ export class BooksOfAuthorsService {
           assignedBy: 'SYSTEM',
         };
 
-        assignments.push(
-          await prisma.booksOfAuthors.create({ data: assignment })
-        );
+        assignments.push(await prisma.booksOfAuthors.create({ data: assignment }));
       });
     });
     return assignments;

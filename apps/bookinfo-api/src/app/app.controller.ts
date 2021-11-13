@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
@@ -20,13 +13,7 @@ export class AppController {
 
   @UseGuards(JwtAuthGuard)
   @Post('autobiography')
-  letAuthorBeBornWriteAndPublishBook(
-    @Body() createAutobiographyProcessDto: CreateAutobiographyProcessDto,
-    @Request() req
-  ) {
-    this.appService.handleCreateAutoBiographyCommand(
-      createAutobiographyProcessDto,
-      req.user
-    );
+  public async letAuthorBeBornWriteAndPublishBook(@Body() createAutobiographyProcessDto: CreateAutobiographyProcessDto, @Request() req) {
+    return this.appService.handleCreateAutoBiographyCommand(createAutobiographyProcessDto, req.user);
   }
 }

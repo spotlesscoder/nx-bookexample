@@ -1,76 +1,64 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
-import { UsersService } from '@bookexample/users';
-import { Test, TestingModule } from '@nestjs/testing';
-import { Author } from '@prisma/client';
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import * as request from 'supertest';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { AppModule } from './app.module';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
+import util = require('util');
 
 describe('AppController', () => {
-  let appController: AppController;
-  let app: TestingModule;
-
-  const mockUsersService = {};
-  const authServiceMock = {};
-  const authorsServiceMock = {
-    createAuthor(author: Author): Promise<Author> {
-      return new Promise<Author>((resolve, reject) => {
-        setTimeout(() => {
-          resolve({
-            birthTimestamp: new Date(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            firstName: 'as',
-            lastName: 'ass',
-            id: '12',
-          });
-        }, 1500);
-      });
-    },
-  };
-  const booksServiceMock = {};
-  const booksOfAuthorsServiceMock = {};
+  let app: INestApplication;
 
   beforeAll(async () => {
-    app = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [
-        AppService,
-        { provide: UsersService, useValue: mockUsersService },
-        {
-          provide: JwtAuthGuard,
-          useValue: jest.fn().mockImplementation(() => true),
-        },
-        { provide: AuthService, useValue: authServiceMock },
-        { provide: AuthorsService, useValue: authorsServiceMock },
-        { provide: BooksService, useValue: booksServiceMock },
-        { provide: BooksOfAuthorsService, useValue: booksOfAuthorsServiceMock },
-      ],
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
-    appController = app.get<AppController>(AppController);
+
+    app = moduleRef.createNestApplication();
+
+    const booksOfAuthorsService = moduleRef.get<BooksOfAuthorsService>(BooksOfAuthorsService);
+    await booksOfAuthorsService.deleteAll();
+
+    const authorsService = moduleRef.get<AuthorsService>(AuthorsService);
+    await authorsService.deleteAll();
+
+    const booksService = moduleRef.get<BooksService>(BooksService);
+    await booksService.deleteAll();
+
+    await app.init();
   });
 
-  it('should create an autobiography', () => {
+  afterAll(async () => {
+    app.close();
+  });
+
+  it('should create an autobiography', async () => {
     const createDto: CreateAutobiographyProcessDto = {
-      authorBirthTimestamp: new Date(),
+      authorBirthTimestamp: new Date('1990-11-01T12:00:00.000Z'),
       authorFirstName: 'hallo',
       authorLastName: 'hallo',
       bookPrice: 1.2,
       bookTitle: 'hallo',
-      publishTimestamp: new Date(),
-      writeStartTimestamp: new Date(),
+      publishTimestamp: new Date('2024-11-01T12:00:00.000Z'),
+      writeStartTimestamp: new Date('2025-11-01T12:00:00.000Z'),
     };
-    expect(
-      appController.letAuthorBeBornWriteAndPublishBook(createDto, {
-        user: { id: 12 },
-      })
-    ).toEqual({
-      id: expect.any(String),
-    });
+
+    const loginReq = await request(app.getHttpServer()).post('/auth/login').send({ username: 'john', password: 'changeme' }).expect(201);
+    console.log(util.inspect(loginReq, { showHidden: false, depth: null }));
+    const token = loginReq.body.access_token;
+
+    const res = await request(app.getHttpServer())
+      .post('/autobiography')
+      .send(createDto)
+      .set('Accept', 'application/json')
+      .set('Authorization', 'Bearer ' + token)
+      .expect('Content-Type', /json/);
+    //.expect(200);
+
+    expect(res.body);
   });
 
   describe('getData', () => {

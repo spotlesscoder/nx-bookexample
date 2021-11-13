@@ -3,7 +3,7 @@ import { BooksService } from '@bookexample/books';
 import { User } from '@bookexample/users';
 import { ChronoUnit, IllegalArgumentException, ZonedDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
-import { Author, Book, Prisma } from '@prisma/client';
+import { Author, Book, BooksOfAuthors, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 
@@ -11,7 +11,7 @@ import { CreateAutobiographyProcessDto } from './create-autobiography-process-dt
 export class AppService {
   constructor(private authorsService: AuthorsService, private booksService: BooksService, private booksOfAuthorsService: BooksOfAuthorsService) {}
 
-  public async handleCreateAutoBiographyCommand(createAutobiographyProcessDto: CreateAutobiographyProcessDto, user: User) {
+  public async handleCreateAutoBiographyCommand(createAutobiographyProcessDto: CreateAutobiographyProcessDto, user: User): Promise<BooksOfAuthors[]> {
     const birthDate: ZonedDateTime = ZonedDateTime.parse(createAutobiographyProcessDto.authorBirthTimestamp.toISOString());
     const writeStartTimestamp: ZonedDateTime = ZonedDateTime.parse(createAutobiographyProcessDto.writeStartTimestamp.toISOString());
 
@@ -44,6 +44,8 @@ export class AppService {
     const booksOfAuthors = this.booksOfAuthorsService.assignBooksToAuthors([author], [book]);
 
     console.log(booksOfAuthors);
+
+    return booksOfAuthors;
   }
 
   getData(): { message: string } {

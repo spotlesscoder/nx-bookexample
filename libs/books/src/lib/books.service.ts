@@ -5,6 +5,10 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class BooksService {
+  public async deleteAll() {
+    await prisma.book.deleteMany({});
+  }
+
   public getBooks(): Promise<Book[]> {
     return prisma.book.findMany();
   }
