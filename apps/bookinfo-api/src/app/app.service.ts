@@ -1,7 +1,7 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
 import { User } from '@bookexample/users';
-import { IllegalArgumentException, LocalDate, Period } from '@js-joda/core';
+import { ChronoUnit, IllegalArgumentException, ZonedDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { Author, Book, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
@@ -9,22 +9,15 @@ import { CreateAutobiographyProcessDto } from './create-autobiography-process-dt
 
 @Injectable()
 export class AppService {
-  constructor(
-    private authorsService: AuthorsService,
-    private booksService: BooksService,
-    private booksOfAuthorsService: BooksOfAuthorsService
-  ) {}
+  constructor(private authorsService: AuthorsService, private booksService: BooksService, private booksOfAuthorsService: BooksOfAuthorsService) {}
 
-  async handleCreateAutoBiographyCommand(
-    createAutobiographyProcessDto: CreateAutobiographyProcessDto,
-    user: User
-  ) {
-    const birthDate : LocalDate = LocalDate.parse(createAutobiographyProcessDto.authorBirthTimestamp.toISOString());
-    const writeStartTimestamp : LocalDate = LocalDate.parse(createAutobiographyProcessDto.writeStartTimestamp.toISOString());
+  public async handleCreateAutoBiographyCommand(createAutobiographyProcessDto: CreateAutobiographyProcessDto, user: User) {
+    const birthDate: ZonedDateTime = ZonedDateTime.parse(createAutobiographyProcessDto.authorBirthTimestamp.toISOString());
+    const writeStartTimestamp: ZonedDateTime = ZonedDateTime.parse(createAutobiographyProcessDto.writeStartTimestamp.toISOString());
 
-    const period: Period = Period.between(birthDate, writeStartTimestamp);
-    if (period.years() < 30) {
-      throw new IllegalArgumentException("Write start timestamp must be at least 30 years apart from birth timestamp");
+    const years: number = birthDate.until(writeStartTimestamp, ChronoUnit.YEARS);
+    if (years < 30) {
+      throw new IllegalArgumentException('Write start timestamp must be at least 30 years apart from birth timestamp');
     }
 
     const author: Author = await this.authorsService.createAuthor({
@@ -38,9 +31,7 @@ export class AppService {
 
     const book: Book = await this.booksService.createBook({
       id: null,
-      price: createAutobiographyProcessDto.bookPrice
-        ? new Prisma.Decimal(createAutobiographyProcessDto.bookPrice)
-        : null,
+      price: createAutobiographyProcessDto.bookPrice ? new Prisma.Decimal(createAutobiographyProcessDto.bookPrice) : null,
       title: createAutobiographyProcessDto.bookTitle,
       createdAt: new Date(),
       updatedAt: null,
@@ -50,10 +41,7 @@ export class AppService {
 
     this.booksService.publishBookWithId(book.id);
 
-    const booksOfAuthors = this.booksOfAuthorsService.assignBooksToAuthors(
-      [author],
-      [book]
-    );
+    const booksOfAuthors = this.booksOfAuthorsService.assignBooksToAuthors([author], [book]);
 
     console.log(booksOfAuthors);
   }

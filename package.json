@@ -5,7 +5,13 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "bookinfo-api:start:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run bookinfo-api:serve",
+    "bookinfo-api:build:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run bookinfo-api:build",
+    "bookinfo-api:test:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run bookinfo-api:test",
+    "start-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=serve",
+    "build-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=build",
+    "test-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=test"
   },
   "private": true,
   "dependencies": {

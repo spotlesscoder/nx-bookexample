@@ -49,7 +49,7 @@ describe('AuthorsMapper', () => {
 
     const entity = AuthorsMapper.createDtoToEntity(dto);
     expect(entity).toBeTruthy();
-    expect(entity.id).toEqual('123');
+    expect(entity.id).toEqual(null);
     expect(entity.firstName).toEqual('John');
     expect(entity.lastName).toEqual('Doe');
     expect(entity.birthTimestamp).toEqual(date);
