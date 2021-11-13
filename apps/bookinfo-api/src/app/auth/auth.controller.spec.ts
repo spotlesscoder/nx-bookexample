@@ -1,12 +1,11 @@
-import { UsersModule, UsersService } from '@bookexample/users';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { UsersModule } from '@bookexample/users';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { LocalAuthGuard } from './local-auth.guard';
 import { LocalStrategy } from './local.strategy';
 
 describe('AuthController', () => {
@@ -22,7 +21,7 @@ describe('AuthController', () => {
           signOptions: { expiresIn: '3600s' },
         }),
       ],
-      providers: [AuthService, UsersService, JwtService, JwtStrategy, LocalStrategy, LocalAuthGuard],
+      providers: [AuthService, JwtStrategy, LocalStrategy],
       controllers: [AuthController],
     }).compile();
 
