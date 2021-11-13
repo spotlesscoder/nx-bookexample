@@ -6,6 +6,7 @@ import { Injectable } from '@nestjs/common';
 import { Author, Book, BooksOfAuthors, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
+import util = require('util');
 
 @Injectable()
 export class AppService {
@@ -39,11 +40,9 @@ export class AppService {
       publishTimestamp: createAutobiographyProcessDto.publishTimestamp,
     });
 
-    this.booksService.publishBookWithId(book.id);
+    await this.booksService.publishBookWithId(book.id);
 
-    const booksOfAuthors = this.booksOfAuthorsService.assignBooksToAuthors([author], [book]);
-
-    console.log(booksOfAuthors);
+    const booksOfAuthors = await this.booksOfAuthorsService.assignBooksToAuthors([author], [book]);
 
     return booksOfAuthors;
   }

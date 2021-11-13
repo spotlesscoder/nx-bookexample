@@ -47,18 +47,26 @@ describe('AppController', () => {
     };
 
     const loginReq = await request(app.getHttpServer()).post('/auth/login').send({ username: 'john', password: 'changeme' }).expect(201);
-    console.log(util.inspect(loginReq, { showHidden: false, depth: null }));
     const token = loginReq.body.access_token;
 
-    const res = await request(app.getHttpServer())
-      .post('/autobiography')
-      .send(createDto)
-      .set('Accept', 'application/json')
-      .set('Authorization', 'Bearer ' + token)
-      .expect('Content-Type', /json/);
-    //.expect(200);
+    const res = (
+      await request(app.getHttpServer())
+        .post('/autobiography')
+        .send(createDto)
+        .set('Accept', 'application/json')
+        .set('Authorization', 'Bearer ' + token)
+        .expect('Content-Type', /json/)
+        .expect(201)
+    ).body;
 
-    //console.log(util.inspect(res, { showHidden: false, depth: null }));
+    expect(res.length).toEqual(1);
+    expect(res[0]).toMatchObject({
+      authorId: expect.any(String),
+      bookId: expect.any(String),
+    });
+
+    expect(res[0].authorId.length).toEqual(25);
+    expect(res[0].bookId.length).toEqual(25);
   });
 
   describe('getData', () => {
