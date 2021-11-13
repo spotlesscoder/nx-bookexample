@@ -53,10 +53,11 @@ describe('BooksMapper', () => {
 
     const entity = BooksMapper.createDtoToEntity(dto);
     expect(entity).toBeTruthy();
-    expect(entity.id).toEqual('123');
+    expect(entity.id).toEqual(null);
     expect(entity.title).toEqual('Book Title');
     expect(entity.price).toEqual(new Prisma.Decimal(12));
-    expect(entity.createdAt).toEqual(null);
+    expect(entity.createdAt.toISOString().length).toEqual(24);
+    expect(entity.createdAt.toISOString()).toMatch(/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/);
     expect(entity.updatedAt).toEqual(null);
     expect(entity.publishTimestamp).toEqual(null);
     expect(entity.writeStartTimestamp).toEqual(date);
