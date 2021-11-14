@@ -7,7 +7,6 @@ import { Author, Book, BooksOfAuthors, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 import { InvalidBirthAndWriteStartRangeException } from './invalid-birth-and-write-start-range';
-import util = require('util');
 
 @Injectable()
 export class AppService {

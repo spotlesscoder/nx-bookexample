@@ -6,7 +6,6 @@ import { BooksOfAuthorsDto } from './books-of-authors-dto';
 import { BooksOfAuthorsMapper } from './books-of-authors-mapper';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
 import { InvalidBirthAndWriteStartRangeException } from './invalid-birth-and-write-start-range';
-import util = require('util');
 
 @Controller()
 export class AppController {

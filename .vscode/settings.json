@@ -4,6 +4,7 @@
         "bookinfo",
         "Chrono",
         "DTOs",
+        "joda",
         "nestjs",
         "upsert"
     ]

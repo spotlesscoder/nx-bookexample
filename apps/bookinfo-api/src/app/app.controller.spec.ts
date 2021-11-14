@@ -7,7 +7,6 @@ import { AppController } from './app.controller';
 import { AppModule } from './app.module';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
-import util = require('util');
 
 describe('AppController', () => {
   let app: INestApplication;

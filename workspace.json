@@ -114,10 +114,7 @@
             "main": "apps/bookstore/src/main.tsx",
             "polyfills": "apps/bookstore/src/polyfills.ts",
             "tsConfig": "apps/bookstore/tsconfig.app.json",
-            "assets": [
-              "apps/bookstore/src/favicon.ico",
-              "apps/bookstore/src/assets"
-            ],
+            "assets": ["apps/bookstore/src/favicon.ico", "apps/bookstore/src/assets"],
             "styles": ["apps/bookstore/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
@@ -229,6 +226,17 @@
         }
       },
       "tags": []
+    },
+    "workspace": {
+      "root": ".",
+      "targets": {
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": true
+          }
+        }
+      }
     }
   }
 }
