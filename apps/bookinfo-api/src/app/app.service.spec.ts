@@ -1,10 +1,10 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
-import { IllegalArgumentException } from '@js-joda/core';
 import { Test } from '@nestjs/testing';
 import { AppService } from './app.service';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
+import { InvalidBirthAndWriteStartRangeException } from './invalid-birth-and-write-start-range';
 
 describe('AppService', () => {
   let service: AppService;
@@ -28,7 +28,7 @@ describe('AppService', () => {
         bookTitle: 'hallo',
         bookPrice: 1.99,
       };
-      expect(service.handleCreateAutoBiographyCommand(createDto, null)).rejects.toThrow(IllegalArgumentException);
+      expect(service.handleCreateAutoBiographyCommand(createDto, null)).rejects.toThrow(InvalidBirthAndWriteStartRangeException);
     });
   });
 

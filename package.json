@@ -13,12 +13,7 @@
     "start-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=serve",
     "build-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=build",
     "test-all:dev": "cd apps/bookinfo-api && npx prisma migrate dev && cd ../../ && nx run-many --all --target=test",
-    "pre-commit-lint": "yarn check-types && yarn lint-staged"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "pre-commit-lint": "yarn lint-staged"
   },
   "private": true,
   "dependencies": {
