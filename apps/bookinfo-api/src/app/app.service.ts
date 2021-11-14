@@ -44,7 +44,6 @@ export class AppService {
     await this.booksService.publishBookWithId(book.id);
 
     const booksOfAuthors = await this.booksOfAuthorsService.assignBooksToAuthors([author], [book]);
-
     return booksOfAuthors;
   }
 
