@@ -20,11 +20,6 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged": {
-    "*.{js,json,css,scss,md,ts,html,graphql}": [
-      "yarn format --uncommitted"
-    ]
-  },
   "private": true,
   "dependencies": {
     "@js-joda/core": "^4.3.1",
