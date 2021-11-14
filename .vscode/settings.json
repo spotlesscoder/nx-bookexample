@@ -3,6 +3,7 @@
         "bookexample",
         "bookinfo",
         "Chrono",
+        "DTOs",
         "nestjs",
         "upsert"
     ]

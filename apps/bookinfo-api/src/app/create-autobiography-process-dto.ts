@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsDate } from 'class-validator';
+import { IsDate, IsOptional } from 'class-validator';
 
 export class CreateAutobiographyProcessDto {
   authorFirstName: string;
@@ -12,6 +12,7 @@ export class CreateAutobiographyProcessDto {
   writeStartTimestamp: Date;
   @Type(() => Date)
   @IsDate()
+  @IsOptional()
   publishTimestamp: Date | null;
   bookTitle: string;
   bookPrice: number;

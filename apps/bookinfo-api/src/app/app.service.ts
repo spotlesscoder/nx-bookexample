@@ -1,11 +1,12 @@
 import { AuthorsService } from '@bookexample/authors';
 import { BooksService } from '@bookexample/books';
 import { User } from '@bookexample/users';
-import { ChronoUnit, IllegalArgumentException, ZonedDateTime } from '@js-joda/core';
+import { ChronoUnit, ZonedDateTime } from '@js-joda/core';
 import { Injectable } from '@nestjs/common';
 import { Author, Book, BooksOfAuthors, Prisma } from '@prisma/client';
 import { BooksOfAuthorsService } from './books-of-authors.service';
 import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
+import { InvalidBirthAndWriteStartRangeException } from './invalid-birth-and-write-start-range';
 import util = require('util');
 
 @Injectable()
@@ -18,7 +19,7 @@ export class AppService {
 
     const years: number = birthDate.until(writeStartTimestamp, ChronoUnit.YEARS);
     if (years < 30) {
-      throw new IllegalArgumentException('Write start timestamp must be at least 30 years apart from birth timestamp');
+      throw new InvalidBirthAndWriteStartRangeException('Write start timestamp must be at least 30 years apart from birth timestamp');
     }
 
     const author: Author = await this.authorsService.createAuthor({
