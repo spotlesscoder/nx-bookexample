@@ -3,7 +3,7 @@ import { BooksService } from '@bookexample/books';
 import { Test } from '@nestjs/testing';
 import { AppService } from './app.service';
 import { BooksOfAuthorsService } from './books-of-authors.service';
-import { CreateAutobiographyProcessDto } from './create-autobiography-process-dto';
+import { CreateAutobiographyDto } from './create-autobiography-dto';
 import { InvalidBirthAndWriteStartRangeException } from './invalid-birth-and-write-start-range';
 
 describe('AppService', () => {
@@ -19,7 +19,7 @@ describe('AppService', () => {
 
   describe('createAutoBiography', () => {
     it('should throw exception on too short time range between birth date and write start', async () => {
-      const createDto: CreateAutobiographyProcessDto = {
+      const createDto: CreateAutobiographyDto = {
         authorFirstName: 'herbert',
         authorLastName: 'mueller',
         authorBirthTimestamp: new Date('2021-09-01T12:00:00.000Z'),

@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsDate, IsOptional } from 'class-validator';
 
-export class CreateAutobiographyProcessDto {
+export class CreateAutobiographyDto {
   authorFirstName: string;
   authorLastName: string;
   @Type(() => Date)

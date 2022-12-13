@@ -3,19 +3,17 @@ import { BookDto, CreateBookDto } from './books-dto';
 
 export class BooksMapper {
   public static toDto(book: Book): BookDto {
-    const result: BookDto = {
+    return new BookDto {
       id: book.id,
       title: book.title,
       price: book.price ? book.price.toNumber() : null,
       writeStartTimestamp: book.writeStartTimestamp,
       publishTimestamp: book.publishTimestamp,
     };
-
-    return result;
   }
 
   public static toEntity(bookDto: BookDto): Book {
-    const result: Book = {
+    return new Book {
       id: bookDto.id,
       createdAt: new Date(),
       updatedAt: null,
@@ -24,12 +22,10 @@ export class BooksMapper {
       publishTimestamp: bookDto.publishTimestamp,
       writeStartTimestamp: bookDto.writeStartTimestamp,
     };
-
-    return result;
   }
 
   public static createDtoToEntity(bookDto: CreateBookDto): Book {
-    const result: Book = {
+    return new Book {
       id: null,
       title: bookDto.title,
       price: bookDto.price ? new Prisma.Decimal(bookDto.price) : null,
@@ -38,7 +34,5 @@ export class BooksMapper {
       createdAt: new Date(),
       updatedAt: null,
     };
-
-    return result;
   }
 }
